@@ -1,0 +1,1 @@
+# Motion constantsINIT = 0START = 1STOP = 2FURTHER = 3PAUSE = 4

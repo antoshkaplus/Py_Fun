@@ -1,0 +1,92 @@
+
+Dialogs
+
+  Modal
+  These dialogs block the rest of the interface until the dialog window is dismissed;
+  users must reply to the dialog before the program continues.
+
+  Nonmodal
+  These dialogs can remain on-screen indefinitely without interfering with other
+  windows in the interface; they can usually accept inputs at any time.
+  
+  standard dialogs (common dialogs): file selection dialogs, 
+                                     error and warning pop ups, 
+                                     and question
+                                     and answer prompts
+    are modal
+    
+  If dialog is modal you can't do more than one copy of it.
+  
+  
+Entry widgets (among others) support the notion of an 
+associated variable—changing the associated variable 
+changes the text displayed in the Entry, and changing 
+the text in the Entry changes the value of the variable. 
+
+ Classes: StringVar, IntVar, DoubleVar, and BooleanVar
+ 
+ 
+Checkbutton, Radiobutton
+  options:
+    command 
+    variable
+    text ?
+  
+  r : value
+
+Scale options:
+  command
+  label - text
+  variable
+  from_ to - borders
+  length - initial size in pixels
+  tickinterval - sets the number of units between marks drawn at regular
+                 intervals next to the scale (the default means no marks are drawn)
+  resolution - option provides the number of units that the scale’s value jumps
+               on each drag or left mouse click event (defaults to 1)
+  showvalue - YES or NO
+  orient - specifies an axis
+ 
+At present, the standard tkinter PhotoImage widget supports only GIF, PPM, and
+PGM graphic file formats, and BitmapImage supports X Windows-style .xbm.
+Unlike all other tkinter widgets, an image is utterly lost if the corresponding Python
+image object is garbage collected. That means you must retain an explicit reference
+to image objects for as long as your program needs them.
+
+Clipboard interface:
+
+self.clipboard_clear()                            # clear the clipboard
+self.clipboard_append(text)                       # store a text string on it
+text = self.selection_get(selection='CLIPBOARD')  # fetch contents, if any 
+ 
+
+/////////////////////////////////////////////////////////////// 
+SOCKETS 
+ 
+socket() - returns socket object 
+  AF_UNIX 
+  AF_INET 
+  AF_INET6 
+    These constants represent the address (and protocol) families, 
+    used for the first argument to socket(). If the AF_UNIX constant 
+    is not defined then this protocol is unsupported.
+  
+  SOCK_STREAM 
+  SOCK_DGRAM 
+  SOCK_RAW 
+  SOCK_RDM 
+  SOCK_SEQPACKET 
+    These constants represent the socket types, used for the second 
+    argument to socket(). (Only SOCK_STREAM and SOCK_DGRAM appear 
+    to be generally useful.)
+  
+"client" socket - an endpoint of a conversation, and a 
+"server" socket, which is more like a switchboard operator.
+ 
+"server" doesn’t send any data. It doesn’t receive any data. 
+It just produces “client” sockets. Each clientsocket is created 
+in response to some other “client” socket doing a connect() 
+to the host and port we’re bound to.   
+ 
+ 
+ 

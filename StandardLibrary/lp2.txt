@@ -1,0 +1,146 @@
+
+def makeAction():
+  acts = []
+  for i in range(5):
+    # all remember same last i
+    acts.append(lambda x: i**x) 
+  return acts
+
+def makeAction():
+  acts = []
+  for i in range(5):
+    # remember current i
+    acts.append(lambda x,i=i: i**x)
+  return acts
+
+flat is better than nested.
+
+
+Function argument-matching forms
+
+func(value)          caller   normal argument:matched by position
+func(name=value)     caller   keyword argument: matched by name
+func(*name)          caller   pass all objects in name as individual 
+                              positional arguments
+func(**name)         caller   pass all key/value pairs (in dictionary) 
+                              in name as individual keyword arguments
+
+def func(name)       function normal argument: matches any by position 
+                              or name
+def func(name=value) function default argument value, if not passed in the call
+def func(*name)      function matches and collects remaining positional
+                              arguments (in a tuple)
+def func(**name)     function matches and collects remaining keyword arguments
+                              (in a dictionary)
+
+Argument Matching:
+
+- In a function call, all nonkeyword arguments must appear first,
+  followed by all keyword arguments, followed by the *name form, and,
+  finally, the **name form, if used.
+- In a function header, arguments must appear in the same order:
+  normal arguments, followed by any default arguments, followed by the 
+  *name form if present, follwed by **name, if used
+
+Python arguments assignment rules:
+1) assign nonkeyword arguments by position
+2) assign keyword arguments by matching names
+3) assign extra nonkeyword arguments to *name tuole
+4) assign extra keyword arguments to **name dictionary
+5) assign default values to unassigned arguments in header   
+After this, Python checks to make sure each argument is passed 
+  just one value; if not, an error is raised.
+
+
+using map
+  # x1 - element of p1; x2 - element of p2
+  map(lambda x1,x2: x1+x2,p1,p2)
+
+
+generators <=> yield
+generator expressions:
+  (x**2 for x in range(n)) # iterable object
+  using:
+    sum(x**2 for x in range(n))
+    sorted((x**2 for x in range(n)),reverse=True)
+
+Defaults and mutable objects:
+  Default argument values are evaluated and saved when a def
+  statement is run, not when the resulting function is called.
+  Internally, Python saves one object per default argument 
+  attached to the function itself.
+
+  def saver(x=[]):
+    x.append(1)
+    print x
+  
+  >> saver()
+  [1]
+  >> saver()
+  [1,1]
+  >> saver()
+  [1,1,1]
+
+
+MODULES
+ 
+import and from are assignments
+
+
+//////
+
+encapsulation
+
+Minimizing from * with 
+- underscore convention: hiding names
+- variable __all__ (list): copy only those names 
+
+Python looks for an __all__ list in the module first; if one is not defined, 
+from * copies all names without a single underscore
+
+/////
+
+use sys.path to change the module search path.
+
+//////
+
+use "as" extension to provide short synonyms for longer names,
+and avoid name clashes when you are already using a name in 
+your script that would otherwise be overwritten by a normal 
+import statement.
+
+import longmodulename as name
+import package.module as mod 
+from module import longname as name
+
+//////
+
+sys.modules - dictionary, that contains all loaded modules.
+key - module name, value - module object.
+
+GOTCHA is "I got you, I understand"
+ 
+reload isn't applied transitively.
+
+/////////////////
+
+CLASSES
+
+Classes are linked to their superclasses by listing them in the
+parentheses in a class header line; the left-to-right order there 
+gives the order in the tree (class overwrites it left neighbour).
+
+Attributes attached to instances pertain only to those single 
+instances, but attributes attached to classes are shared by all their 
+subclasses and instances
+
+In Python, instances inherit from classes, and classes inherit 
+from superclasses.
+
+Because class is a compound statement, any sort of statement can be 
+nested inside it's body - print,=,if,def, and so on. All the statements 
+inside the class statement run when the class statement itself runs.   
+
+
+
+ 

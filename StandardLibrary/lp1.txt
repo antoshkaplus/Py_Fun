@@ -1,0 +1,265 @@
+
+Everything is object.
+
+Shared reference - multiple names referencing the same object.
+
+polymorphism in the context of object-oriented programming, 
+is the ability to create a variable, a function, or an object that has more than one form. 
+The word derives from the Greek word meaning "having multiple forms". 
+
+beyond
+fairly
+stellar
+suppress
+escape
+though
+
+Raw Strings: r"C:\new\text.dat"
+
+mantra = "always look on the bright side of the life"
+
+Name conventions:
+- Names that begin with a single underscore (_X) are not imported by a from
+  module import * statement
+- Names that have two leading and trailing underscores (__X__) are system-defined
+  names that have special meaning to the interpreter
+- Names that begin with two underscores, and do not end with two more (__X)
+  are localized ("mangled") to enclosing classes 
+- The name that just a single underscore (_) retains the result of the last 
+  expression when working interactively
+
+- Class names commonly start with an uppercase letter and module names with a 
+  lowercase letter
+- self though not reserved usually has a special role in classes
+
+//////////////////////////////////////////////////////////////////////////////////
+
+print statement
+- print spam, ham, # no "end of line"
+- print >> myfile, spam, ham # prints text to myfile
+- print "%s%s" % (x,y) # if don't want whitespaces between strings
+
+python script.py < inputFile > outputfile
+
+a rule of thumb in coding..
+
+comparison operators return True or False.
+logical operators return right or left Object.
+
+///////////////////////////////////////////////////////////////////
+
+else part executes after the loop if it exit without a break statement
+being encountered
+
+# reading file line by line (the rule of thumb)
+for line in open("script.py"):
+  print line
+
+# put file content into the list where elements are lines
+list(open("script.py"))  
+  
+# go through dictionary keys
+for key in D:
+  print key,D[key]
+  
+zip trancates result tuples at the length of the shortest sequence 
+when the argument lengths differ.
+  
+map function can take multiple arguments.
+
+///////////////////////////////////////////////////////////////
+
+# - hash mark
+
+dir - provides a list of attribute names of an object
+
+__doc__ - attribute of the object, that contain docstring.
+  docstring is a string comment that is coded at the tops
+  of module files and function and class statements, before 
+  any executable code.  
+  
+  /// __doc__ example:
+  
+  """ module documentation """
+  
+  def func():
+    """ function documentation """
+    pass
+    
+  class A:
+    """ class documentation """
+    pass
+  
+  ///
+ 
+help - full report about object  
+
+/////////////////////////////////////////////////////////////////
+
+Scope Resolution: 
+- Name references search at most four scopes: local, then enclosing functions
+(if any), then global, then build-in
+- Name assignments create or change local names by default
+- Global declarations (global) map assigned names to an enclosing module's scope
+
+global declarations make the search begin in the global (module file) scope and 
+to enclosing modules.
+
+when nested functions are present, variables in enclosing functions may only 
+be referenced, not changed.
+
+
+
+
+import | reload (function) updates imported module.s
+
+a module must have been previously imported 
+successfully before you can reload it.
+
+The module search path:
+1) the home directory of the program
+2) PYTHONPATH directories (if set)
+3) standard library directories
+4) the contens of any .pth files (if present)
+
+package imports....
+  
+////////////////////////////////////////////////////  
+  
+Class Inheritance Techniques:
+  Super: defines a method function and a delegate that expects
+         an action in a subclass
+  Inheritor: doesn't provide any new names, so it gets everything 
+             defined in Super
+  Replacer: overrides Super's method with a version of it's own
+  Extender: customizes Super's method by overriding and calling 
+            back to run the default
+  Provider: implements the action method expected by Super's 
+            delegate method
+    
+class Super:
+  def method(self):
+    pass
+  def delegate(self):
+    self.action()
+    
+class Inheritor(Super):
+  pass 
+
+class Replacer(Super):
+  def method(self):
+    pass
+    
+class Extender(Super):
+  def method(self):
+    pass 
+    Super.method(self)
+    
+class Provider(Super):
+  def action(self):
+    pass
+    
+///////////////////////////////////    
+    
+Common operator overloading methods
+
+__init__    contructor
+__iter__    iterator context (through generator)  
+__getattr__ if attribute doesn't exist (string argument)
+__setattr__ intercepts all attribute assignments, so
+            self.attr = value becomes self.__setattr__('attr',value).
+            use self.__dict__['name'] = x instead of self.name.x 
+            inside this method to prevent recursion
+__repr__    convert instance of object to string that could 
+            create copy of object by evaluating 
+__str__     convert instance of object to string for
+            good displaying
+__call__    the method is called when instance is called            
+__del__     destractor method, runs automatically, when an instance's
+            space is being reclaimed (garbage collection time).  
+__class__   instance attribute that links to it class 
+            class has attribute __bases__ that is tuple containing links
+            to higher superclasses
+
+            
+            
+Make objects callable with __call__ method.            
+    
+Classes can represent just about any objects and relationships you can express 
+in a sentence; just replace nouns with classes, and verbs with methods, and you'll
+have a first cut at a design.
+
+Use pickle and shelve to keep instances in files.
+
+wrapped objects | delegated operations
+
+class wrapper:
+  def __init__(self,object):
+    self.wrapper = object
+  def __getattr__(self,attrname):
+    do some work before
+    return getattr(self.wrapped,attr)
+
+
+instance method
+static method
+class method
+
+Error Handling: 
+
+try:
+  main-action
+except Exception1:
+  handler1
+except Exception2:
+  handler2
+...
+else:
+  else-block
+finally:
+  finally-block
+  
+vaults of parnassus  
+  
+  
+  
+  
+
+
+
+
+    
+
+
+    
+
+
+
+
+
+            
+  
+  
+
+
+
+
+
+  
+    
+    
+    
+    
+
+
+
+
+
+    
+  
+  
+  
+  
+  
+  
+  

@@ -1,0 +1,1 @@
+no return don't call function inside lambda

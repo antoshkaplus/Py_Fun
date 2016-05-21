@@ -1,0 +1,232 @@
+
+pickle
+
+//////
+
+shelve
+
+//////
+
+ZODB 
+
+//////
+
+glob 
+
+//////  
+
+system tools:
+  - command-line utilities
+  - shell scripts 
+  - system administration
+  - systems programming, 
+  and other permutations of such words. 
+  
+//////
+
+ inside sys:
+ - argv - command line arguments
+ - argv[0] is the script pathname if known  
+ - path - module search path 
+ - path[0] is the script directory, else ''
+ - modules - dictionary of loaded modules
+  
+//////  
+  
+  python books:
+  - Python Essential Reference
+  - Python in a Nutshell
+  - Python Standard Library
+  - Python Pocket Reference
+
+//////
+
+sys.exc_info function that returns a tuple with
+the latest exception’s type, value, and traceback object. 
+
+//////
+
+Commonly used os module tools
+Shell variables          os.environ
+Running programs         os.system, os.popen, os.execv, os.spawnv
+Spawning processes       os.fork, os.pipe, os.waitpid, os.kill
+Descriptor files, locks  os.open, os.read, os.write
+File processing          os.remove, os.rename, os.mkfifo, os.mkdir, os.rmdir
+Administrative tools     os.getcwd, os.chdir, os.chmod, os.getpid, os.listdir, os.access
+Portability tools        os.sep, os.pathsep, os.curdir, os.path.split, os.path.join
+Pathname tools           os.path.exists('path'), os.path.isdir('path'), os.path.getsize('path')  
+  
+//////
+
+os: getpid - get process id
+    getcwd - get current directory
+    chdir() - set currect directory
+
+    system
+    popen
+   
+    environ - shell variables 
+              supports both key indexing and assignment.
+   
+portability constants:
+    os.pathsep, os.sep, os.pardir, os.curdir, os.linesep
+    (';', '\\', '..', '.', '\r\n')    
+
+os.path:    
+    isdir(path)
+    isfile(path)
+    exists(path)
+    getsize(path)    
+    split(pathfile) # separates a filename from its directory path
+    join(paths,file)
+    dirname(name), basename(name) #  return the first and
+                                  #  second items returned 
+                                  #  by a split simply as a 
+                                  #  convenience
+    splitext(path) # strips the file extension 
+    abspath(add_to_cur_path) # returns full directory path
+  
+# python sys.argv used by python itself 
+python testargv.py -i data.txt -o results.txt
+['testargv.py', '-i', 'data.txt', '-o', 'results.txt']  
+  
+  
+Assignments to os.environ keys are passed outside 
+the interpreter and down the spawned programs chain, but never
+back up to parent program processes (including the system shell).
+
+Also environment settings are loaded into os.environ on startup and not on
+each fetch
+  
+use pipes!  
+python writer.py | python reader.py  
+  
+  
+io.StringIO - to and from in-memory stream strings  
+io.BytesIO - byte buffer (not strings)  
+  
+b'string' - means binary string  
+  
+print(stuff, file=afile) - print to file
+
+
+# some garbage
+
+from subprocess import Popen, PIPE, call
+>>> X = call('python hello-out.py')                            # convenience
+Hello shell world
+>>> X
+0
+>>> pipe = Popen('python hello-out.py', stdout=PIPE)
+>>> pipe.communicate()[0]                                      # (stdout, stderr)
+b'Hello shell world\r\n'
+>>> pipe.returncode                                            # exit status
+0
+>>> pipe = Popen('python hello-out.py', stdout=PIPE)
+>>> pipe.stdout.read()
+b'Hello shell world\r\n'
+>>> pipe.wait()                                                # exit status
+0
+
+>>> pipe = Popen('python hello-in.py', stdin=PIPE)
+>>> pipe.stdin.write(b'Pokey\n')
+6
+>>> pipe.stdin.close()
+>>> pipe.wait()
+0
+>>> open('hello-in.txt').read()                       # output sent to a file
+'Hello Pokey\n'
+  
+//////
+
+working with files
+
+The struct module provides calls to 
+pack and unpack binary data.  
+  
+os file functions:
+
+os.open(path,flags,mode) # Opens a file and returns its descriptor
+os.read(descriptor,N) # Reads at most N bytes and returns a byte string
+os.write(descriptor,string) # Writes bytes in byte string string to the file
+os.lseek(descriptor,position,how) # Moves to position in the file  
+  
+file.fileno() # Get file descriptor from file object
+  
+using os.open with the O_EXCL flag is the most portable way to lock 
+files for concurrent updates or other process synchronization in Python today  
+  
+os.fdopen call wraps a file descriptor in a file object.  
+  
+os file functions:
+  rename 
+  remove
+  chown
+  chmod
+  stat # file information
+
+globbing means collecting the names of all entries 
+in a directory — files and subdirectories —
+whose names match a given filename pattern.
+
+The glob call from glob module accepts the usual filename 
+pattern syntax used in shells: ? means any one character, 
+* means any number of characters, and [] is a character selection set.
+
+os.listdir - takes a simple directory name string and returns a list
+containing the names of all entries in that directory—both simple files 
+and nested directories.
+  
+os.walk - get (dirname, # this directory (name from variable)
+               subshere, # nested directories 
+               fileshere) # nested files 
+  next iteration - open next subdirectory and return usual loop
+  
+  
+GUI:
+ - The main thread handles all GUI updates and runs a timer-based loop that wakes
+up periodically to check for new data on the queue to be displayed on-screen. In
+Python’s tkinter toolkit, for instance, the widget after(msecs, func, *args) method
+can be used to schedule queue-check events. Because such events are dispatched
+by the GUI’s event processor, all GUI updates occur only in this main thread (and
+often must, due to the lack of thread safety in GUI toolkits).
+ - The child threads don’t do anything GUI-related. They just produce data and put
+it on the queue to be picked up by the main thread. Alternatively, child threads
+can place a callback function on the queue, to be picked up and run by the main
+thread. It’s not generally sufficient to simply pass in a GUI update callback function
+from the main thread to the child thread and run it from there; the function in
+shared memory will still be executed in the child thread, and potentially in parallel
+with other threads.  
+  
+ 
+!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+! need to know pickable objects ! for multiprocessing module
+!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!  
+
+multiprocessing.Pipe - two end pipe, 
+where can receive and send from both 
+ends. 
+
+!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+
+fnmatch.fnmatch pattern model:
+  * to match any number of characters
+  ? to match any single character
+  [...] and [!...] to match any character 
+                   inside the bracket pairs or not
+  
+  
+Laziness is the mother of many a framework.  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  

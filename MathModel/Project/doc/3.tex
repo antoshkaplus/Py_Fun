@@ -1,0 +1,21 @@
+\section{Вывод формул}
+ 
+ Общее решение диф. уравнения вида
+  $ a\ddot{y} + b\dot{y} + cy = 0,$
+находится следующими операциями, 
+  $$ y(t) = C_1 e^{\alpha t}cos(\beta t) + C_2 e^{\alpha t}sin(\beta t), \text{\quad где \quad} \alpha = -\frac{b}{2a}, \text{\quad} \beta = \frac{\sqrt{4ac-b}}{2a}. $$
+Тогда для задачи Коши:
+  $$ 4 m \ddot{x}(t) + c_0 x(t) = 0, \text{\quad}  x(0) = 0 \text{\quad и \quad} \dot{x}(0) = \frac{S}{2mL}, $$
+поскольку $b = 0$, имеем,  
+  $$ x(t) = C_1 cos(\beta t) + C_2 sin(\beta t), \text{\quad где \quad} \beta = \sqrt{\frac{c}{a}} $$ 
+При подстановке первого начального условия получим $ С_1 = 0 $. При подстановке второго начального условия:
+  $$ \dot{x}(0) = C_2 cos(\beta t) \cdot \beta = \frac{S}{2mL}, \quad C_2 = \frac{S}{2mL\beta} $$ 
+Тогда искомое частное решение,
+  $$ x(t) = \frac{S}{2mL\beta}sin(\beta t) = \frac{S}{2mL}\sqrt{\frac{a}{c}} \cdot sin(\frac{c}{a}t) = \frac{S}{2mL}\sqrt{\frac{4m}{c_0}}\cdot sin(\sqrt{\frac{c_0}{4m}}\cdot t), $$
+  $$ x(t) = \frac{S}{L\sqrt{m c_0}}\cdot sin(\frac{1}{2}\sqrt{\frac{c_0}{m}}\cdot t).$$ 
+
+По условию, модель разрушается при 
+  $$ x_{макс.} = \frac{S}{\sqrt{c_0 m L}} \text{, то \quad} x(t) < x_{макс.}, \frac{S}{L\sqrt{m c_0}}\cdot sin(\frac{1}{2}\sqrt{\frac{c_0}{m}}\cdot t) < \frac{S}{\sqrt{c_0 m L}}, $$
+  $$ \sqrt{\frac{1}{L}}\cdot sin(\frac{1}{2}\sqrt{\frac{c_0}{m}}\cdot t) < 1.$$
+Так как $t$ -- непрерывная возрастающая величина, $sin(\frac{1}{2}\sqrt{\frac{c_0}{m}}\cdot t)$ принимает всевозможные значения при $c_0 \ne 0$, тогда нер-во можно представить в виде 
+  $$ \sqrt{\frac{1}{L}} < 1. \text{\quad или \quad} L > 1. $$ 
