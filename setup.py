@@ -7,5 +7,6 @@ setup(name='antoshkaplus',
       author='Anton Logunov',
       author_email='antonlogunov91@gmail.com',
       license='MIT',
-      packages=['antoshkaplus.finance', 'antoshkaplus.numtech', 'antoshkaplus.stats'],
+      packages=['antoshkaplus.finance', 'antoshkaplus.numtech',
+                'antoshkaplus.stats', 'antoshkaplus.optimize'],
       zip_safe=False)
