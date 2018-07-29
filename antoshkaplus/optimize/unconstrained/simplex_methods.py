@@ -2,7 +2,7 @@
 import numpy as np
 import matplotlib.pyplot as plt
 
-import .one_dimensional.direct_methods as dm
+import antoshkaplus.optimize.one_dimensional.direct_methods as dm
 
 # constructing simplexes
 
@@ -158,7 +158,8 @@ def unreg_simplex(func,edge_len,x0,alpha,beta,gamma,delta,eps):
           
 
 # other direct methods
-
+# d - max step
+# eps - how good to optimize by x
 def coordinate_descent_method(func,x0,d,eps):
   n = len(x0)
   q = [x0]
@@ -178,6 +179,32 @@ def coordinate_descent_method(func,x0,d,eps):
 
 
 
+def coordinate_descent_method_nonconvex(func,x0,d,eps):
+  n = len(x0)
+  q = [x0]
+  n_iter = 0
+
+  f = func(x0)
+  while True:
+    x1 = np.array(x0)
+    for i in range(n):
+      e = np.zeros(n); e[i] = 1.
+      phi = lambda alpha: func(x1+alpha*e)
+      alpha,f_new,iters = dm.golden_section_search(phi,(-d,d),eps)
+      if f_new >= f:
+        continue
+
+      f = f_new
+      x1[i] += alpha
+
+    q.append(x1)
+    n_iter += 1
+    if max(abs(x1-x0)) <= eps: break
+    x0 = x1
+  x = x1
+  return x,func(x),n_iter,q
+
+
 if __name__ == "__main__":
 
   func = lambda x: 6.*x[0]**2-4.*x[0]*x[1]+3.*x[1]**2+ \
@@ -194,9 +221,9 @@ if __name__ == "__main__":
   gamma = 1./4.
   
   rsc_x,y,n,rsc_q = unreg_simplex(func,edge_len,x0,alpha,beta,gamma,delta,eps)
-  print rsc_x,y,n
+  print(rsc_x,y,n)
   rspr_x,y,n,rspr_q = reg_simplex_with_provided_reduction(func,edge_len,x0,delta,eps)
-  print rspr_x,y,n 
+  print(rspr_x,y,n)
   
   # x,y,n_iter,q = coordinate_descent_method(func,x0,10.,eps)
   # print x,y,n_iter

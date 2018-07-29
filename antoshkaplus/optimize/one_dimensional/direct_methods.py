@@ -25,7 +25,8 @@ def dichotomy_method(func,segment,delta=.1**3/3.,eps=.1**3):
 """ end dichotomy_method """
 
 
-""" golden_section_search """  
+""" golden_section_search """
+# one dimensional optimization of convex function
 def golden_section_search(func,segment,eps=.1**3):
   tau = 1.618033988
   a,b = segment
@@ -89,7 +90,7 @@ def quadratic_approximation_method(func,segment,eps=.1**3):
       else: 
         x3 = x_; y3 = y_ # x1,x2 the same
         
-    print x1,x2,x3    
+    print(x1,x2,x3)
   x = (x1+x3)/2.
   return x,func(x),n
     
@@ -166,8 +167,8 @@ if __name__ == "__main__":
   print "dichotomy_method:"," x=",xd," y=",yd," n=",nd
   """
   xg,yg,ng = golden_section_search(func,seg)
-  print "golden_section_search:", \
-        " x=",xg," y=",yg,"n=",ng
+  print("golden_section_search:", \
+        " x=",xg," y=",yg,"n=",ng)
   """
   xq,yq,nq = quadratic_approximation_method(func,seg)
   print "quadratic_approximation_method:", \
