@@ -169,7 +169,7 @@ def coordinate_descent_method(func,x0,d,eps):
     for i in range(n):
       e = np.zeros(n); e[i] = 1.
       phi = lambda alpha: func(x1+alpha*e)
-      x1[i] += dm.golden_section_search(phi,(-d,d),eps)[0]
+      x1[i] += dm.golden_section_search(phi, bounds[i], eps[i])[0]
     q.append(x1)
     n_iter += 1
     if max(abs(x1-x0)) <= eps: break
