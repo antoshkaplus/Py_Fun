@@ -6,3 +6,5 @@ out.txt
 *.pyc
 
 *.egg-info/
+
+.idea

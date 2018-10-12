@@ -3,6 +3,7 @@ import numpy as np
 import matplotlib.pyplot as plt
 
 import antoshkaplus.optimize.one_dimensional.direct_methods as dm
+from antoshkaplus.optimize.one_dimensional.methods import greedy_sample_branching
 
 # constructing simplexes
 
@@ -203,6 +204,36 @@ def coordinate_descent_method_nonconvex(func,x0,d,eps):
     x0 = x1
   x = x1
   return x,func(x),n_iter,q
+
+
+def coordinate_descent_method_mesh(func, x_0, x_bounds, x_eps):
+
+  def dim_func(x_0, i):
+    def res(x):
+      old = x_0[i]
+      x_0[i] = x
+      v = func(x_0)
+      x_0[i] = old
+      return v
+    return res
+
+  x_best = np.array(x_0)
+  v_best = func(x_best)
+  while True:
+    value_changed = False
+    for i in range(len(x_0)):
+      x_i, v = greedy_sample_branching(dim_func(x_best, i), x_bounds[i], 10, x_eps[i])
+      if v_best > v:
+        x_best[i] = x_i
+        v_best = v
+        value_changed = True
+
+    if not value_changed:
+      break
+
+  return x_best, v_best
+
+
 
 
 if __name__ == "__main__":
