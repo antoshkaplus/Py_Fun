@@ -91,7 +91,7 @@ def find_matches_shm_worker(shm_name: str, user_passwords: ty.Set[str]):
     return found
 
 
-def find_matches_shm():
+def find_matches_shm(chunks_read = 0):
     def on_success(res):
         sema.release()
         if res:
@@ -106,7 +106,8 @@ def find_matches_shm():
     with Pool(CPU_COUNT) as pool:
         with open(GLOBAL_KNOWN_PASSWORDS_PATH, 'rb') as file:
             timer = Timer()
-            chunks_read = 0
+            if chunks_read > 0:
+                file.seek(CHUNK_SZ*chunks_read, 1)
             while True:
                 s = file.read(CHUNK_SZ + OFFSET)
                 chunks_read += 1
@@ -185,11 +186,11 @@ def find_matches_sequencial():
 
 
 # try_read_all()
-FindMatches().run(read_user_passwords())
+# FindMatches().run(read_user_passwords())
 # print_config()
 # print_user_passwords()
 # find_matches_sequencial()
 
-# if __name__ == '__main__':
-#     multiprocessing.set_start_method('spawn')
-#     find_matches_shm()
+if __name__ == '__main__':
+    multiprocessing.set_start_method('spawn')
+    find_matches_shm(490)
